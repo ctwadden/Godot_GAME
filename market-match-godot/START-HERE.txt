@@ -1,0 +1,14 @@
+MARKET MATCH / AD STREET — GODOT EDITION
+
+1. Install/open Godot 4.6.2 Standard from godotengine.org.
+2. Extract this entire ZIP.
+3. In Godot, choose Import and select project.godot in this folder.
+4. Wait for import, then press F5.
+5. Choose Start student game or Watch optional expert demo.
+
+Godot itself is not included. There are no extra assets or plugins to install.
+For students who cannot install Godot, the same Godot game runs online:
+https://ctwadden.github.io/Godot_GAME/market-match/
+
+Save/download an experiment report before closing or starting fresh.
+Read teacher-guide.md for chapter links and teaching assumptions.

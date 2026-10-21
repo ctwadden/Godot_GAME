@@ -78,3 +78,15 @@ Latest tested strategy results: classroom 1,340 deliveries, $149,300 cash, 100 t
 - `assets/`: offline coastline data and original transport icons.
 
 This is a teaching prototype. Hiring and capacity installation are immediate; no full labour market or construction schedule exists. Country costs/rates are fictional scenario contracts. There is no causal model of automated hiring bias, IP/knowledge transfer, actual robot automation, cryptocurrency, gig work, targeted advertising or global consumer markets. Diversification is discussed and checked but not a full playable system. No audio or standalone app export is included. The Web export preset includes `assets/*.geojson`. Install the standard 4.6.2 web export template to rebuild, then run `godot --headless --path . --export-release Web site/play/index.html`. `tools/package_project.py` refreshes the source ZIP. GitHub Pages serves the root of main; `index.html` links to the browser build and source ZIP.
+
+
+## Market Match / Ad Street — second Godot game
+
+The separate `market-match-godot/project.godot` project replaces the earlier HTML prototype with a Godot 4.6.2 game. It has an animated marketplace, five transaction/role checks, three ad policies, twenty inspectable synthetic shoppers, optional advice and a seven-step expert demo. Reproducible campaign outcomes and reports support explanation rather than click-score grading.
+
+- Play: https://ctwadden.github.io/Godot_GAME/market-match/
+- Source ZIP: https://ctwadden.github.io/Godot_GAME/site/downloads/Market-Match-Godot.zip
+- Import that project's `project.godot` in Godot and press F5.
+- Tests live in `market-match-godot/tests/`; packaging uses `python3 tools/package_market_match.py`.
+
+The existing demo/student URLs and old `Market-Match.zip` download now point to the Godot edition. Nova remains a separate project at the repository root.

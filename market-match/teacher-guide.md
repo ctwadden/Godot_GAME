@@ -1,11 +1,11 @@
-# Market Match / Data Choices
+# Market Match / Ad Street — Godot edition
 
 A 20–25 minute teaching simulation, provisionally timed; classroom testing is still needed. Based on the e-commerce and personalized-advertising discussion in the supplied chapter (4.2C, pp. 221–222). This is a focused extension, not coverage of currencies or the whole chapter.
 
 ## I can statements and evidence
 
-- I can classify B2B, B2C and C2C using the actual buyer and seller: three checked transaction cards.
-- I can distinguish seller, buyer, marketplace and payment provider: role checks and explanations.
+- I can classify B2B, B2C and C2C using the actual buyer and seller: three checked transaction cases.
+- I can distinguish seller, buyer, marketplace and payment provider: two intermediary role checks and explanations.
 - I can trace observed event → inferred preference → matching/ranking rule → advert → possible effect: profile inspection and written chain.
 - I can compare contextual, consented interest and broad advertising with controlled conditions: two runs with the same product, audience, slots and seed.
 - I can explain relevance, reach, missed customers and irrelevant impressions using figures: comparison response.
@@ -46,4 +46,9 @@ Twenty synthetic profiles cannot establish real discrimination. Students would n
 
 ## Access and privacy
 
-Open index.html in a modern browser or use the published website. No installation, accounts, trackers, external scripts, real browsing history, camera or device-data APIs. The app keeps answers only in page memory until a learner downloads a text report. Do not enter names or personal data. Hosting providers may process ordinary web requests under their own policies; the game does not control that infrastructure. Reloading loses work. Reports are reviewed by the teacher, not automatically graded.
+Play the Godot web export at https://ctwadden.github.io/Godot_GAME/market-match/ or import the downloadable source project in Godot 4.6.2 Standard and press F5. The source ZIP includes project.godot, GDScript and tests; Godot itself is not included. The exported web build needs HTTP hosting and does not run by double-clicking its index.html. Use landscape on a phone. Controls support mouse/touch and standard Godot keyboard focus; canvas rendering does not provide the semantic screen-reader interface of an HTML form. No accounts, trackers, real browsing history, camera or device-data APIs are used. Godot uses its normal rendering and input runtime. The game keeps answers only in session memory until a learner downloads a text report. Do not enter names or personal data. Hosting providers may process ordinary web requests under their own policies; the game does not control that infrastructure. Starting a new game or reloading loses work. Native play uses a Save dialog; web play downloads the report. Reports are reviewed by the teacher, not automatically graded.
+
+
+## Godot edition interaction
+
+Animated shopfronts, moving shoppers and flying adverts show the result of launching a campaign. Green shopper cards are relevant impressions, coral are irrelevant impressions and purple are potential customers missed. Select a shopper to inspect it; a plus marks a simulated click, and a gold ring marks a simulated purchase. Outcomes are snapshots: editing consent or an event requires a rerun. Animations illustrate rules and do not change them. There is no score or punishment for refusing targeting. Optional advice is available in student mode. The demo locks edits and resets into a fresh student game. Model tests, UI action tests, rendered native captures and the web export are checked; classroom comprehension remains untested.

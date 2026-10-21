@@ -1,26 +1,219 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="A fictional marketplace and advertising experiment for Digital Society. No real profiles or trackers."><title>Market Match / Data Choices</title><link rel="stylesheet" href="style.css"><script defer src="model.js"></script><script defer src="app.js"></script></head><body>
-<header><a class="brand" href="https://ctwadden.github.io/Godot_GAME/">M<span>↔</span>M</a><div><p class="kicker">DIGITAL SOCIETY / ECONOMICS LAB 02</p><h1>Market Match<span> & Data Choices</span></h1></div><button id="help" class="quiet">How to play</button></header>
-<main>
-<section id="welcome" class="welcome"><div><p class="kicker">WHO TRADES? WHO GETS SEEN?</p><h2>One marketplace.<br>Different relationships.</h2><p>Match buyers and sellers. Then run the same advert through three policies and inspect which fictional people get included—or missed.</p><div class="actions"><button id="start-demo">Watch the worked example</button><button id="start-student" class="secondary">Start student experiment</button></div><p class="small">About 20–25 minutes including explanation. All 20 profiles and their data are synthetic. No names, accounts, browsing history, cookies, trackers, cameras or device details are requested by this game.</p></div><div class="flow-art" aria-label="Separate roles: seller lists an item on a marketplace; buyer orders it; a payment provider processes payment"><div class="actor"><span>▣</span><b>Seller</b><small>Offers the item</small></div><i>listing →</i><div class="actor central"><span>↔</span><b>Platform</b><small>Connects parties</small></div><i>← order</i><div class="actor"><span>◇</span><b>Buyer</b><small>Purchases the item</small></div><div class="payment"><span>↳ Payment provider: processes the payment, not the product sale</span></div></div></section>
-<section id="lab" hidden>
-<nav aria-label="Learning stages"><button data-stage="transactions">1. Match transactions</button><button data-stage="experiment">2. Run an ad experiment</button><button data-stage="evidence">3. Explain & transfer</button><button id="restart" class="quiet">New attempt</button></nav>
-<aside id="coach" hidden aria-live="polite"></aside>
-<section id="transactions" class="stage"></section>
-<section id="experiment" class="stage" hidden>
-<div class="section-heading"><div><p class="kicker">EXPERIMENT / SAME PRODUCT, SAME AUDIENCE</p><h2>Who sees the advert?</h2></div><button id="show-rules" class="quiet">Inspect the rules</button></div>
-<form id="settings" class="settings"><label>Product<select id="product"><option value="headphones">Studio headphones / music</option><option value="bicycle">City bicycle / cycling</option><option value="course">Coding course / coding</option></select></label><label>Ad policy<select id="policy"><option value="broad">Broad campaign</option><option value="context">Contextual advertising</option><option value="interest">Consented interest targeting</option></select></label><label>Available slots<select id="slots"><option>5</option><option selected>10</option><option>20</option></select></label><label>Replay seed<input id="seed" type="number" min="1" max="9999" value="23"></label><fieldset><legend>Predict before running</legend><label>Relevance<select id="predict-relevance" required><option value="">Choose…</option><option>Mostly relevant</option><option>Mixed or mostly irrelevant</option><option>Not enough information</option></select></label><label>Reach<select id="predict-reach" required><option value="">Choose…</option><option>Many profiles</option><option>Few profiles</option><option>Not enough information</option></select></label></fieldset><button type="submit">Run this experiment</button></form>
-<p class="small">One slot serves one advert to one profile. Eligible profiles may still miss an ad when slots run out. The declared interests are fictional audit evidence; the matching service never reads them.</p>
-<details id="rules"><summary>Matching, ranking, outcomes and data-use assumptions</summary><div class="rule-grid"><div><h3>Eligibility</h3><p><b>Broad:</b> all 20 profiles.<br><b>Contextual:</b> current page topic = product topic. Browsing consent is not required because history is not used.<br><b>Interest:</b> consent = yes, most frequent active browsing topic = product topic, and that topic appears at least twice. Ties use music, cycling, coding, design order. Deleted events are ignored.</p></div><div><h3>Ranking and possible outcomes</h3><p>Broad/contextual use a seeded queue. Interest ranks by inferred-topic count, then the same queue. The first N eligible profiles receive an advert. A repeatable hash creates a click draw and purchase draw for each product/profile/seed.</p><p>For served profiles: simulated click probability is 0.55 when declared interest matches, otherwise 0.12. A simulated click has a separate 0.30 purchase probability. These are <b>invented teaching assumptions</b>, not measured effectiveness. A click is not a purchase guarantee.</p></div><div><h3>Count inputs, not morality</h3><p>Context reads 20 current-page topic fields. Interest reads 20 consent fields and every active browsing-topic field for consenting profiles. Broad reads none of these fields. Counts include inputs assessed even when no advert is served. One event topic = one field read. Declared-interest fields used by matching = 0.</p><p>These counts describe input use. Sensitivity, purpose, retention and control matter too. Contextual pages can themselves reveal sensitive subjects. The queue uses fictional IDs only; no real identifiers are collected.</p></div></div></details>
-<div id="run-message" role="status" aria-live="polite"></div>
-<div id="results"></div>
-<div id="comparison"></div>
-<div class="section-heading audience-heading"><div><p class="kicker">THE AUDIENCE / ALL 20 FICTIONAL PROFILES</p><h2>Inspect a match—or a miss.</h2></div><button id="reset-audience" class="quiet">Restore original fictional inputs</button></div>
-<p class="small">Change fictional targeting consent or delete one fictional browsing event in a profile. Then run again. Existing results remain a labelled snapshot until rerun.</p>
-<div id="audience" class="audience"></div>
-</section>
-<section id="evidence" class="stage" hidden></section>
-</section>
-</main><footer>Fictional educational model / no live adverts or purchases. <a href="teacher-guide.md">Teacher guide and learning targets</a> · <a href="https://ctwadden.github.io/Godot_GAME/site/downloads/Market-Match.zip" download>Download offline game ZIP</a> · <a href="https://ctwadden.github.io/Godot_GAME/">Nova game</a></footer>
-<dialog id="profile-dialog"><button id="close-profile" class="quiet close">Close profile</button><div id="profile-detail"></div></dialog>
-<dialog id="help-dialog"><button id="close-help" class="quiet close">Close</button><h2>Your session</h2><ol><li>Watch the worked example, or classify the three item sales by buyer and seller roles.</li><li>Choose a product, policy and slot limit. Make a prediction and run.</li><li>Inspect each profile’s observed data, inference, rule and outcome. P04 has a deliberately incorrect inference.</li><li>Pin a run as A. Change only policy and run B to compare fairly. Editing consent or a browsing event is a separate input-change experiment.</li><li>Explain your evidence and a new opportunity-ad case. Download a report; it is not uploaded automatically.</li></ol><p>Advertising can pay a platform’s costs so users do not pay directly. That funding arrangement does not make every use of data acceptable. Examine consent, manipulation, exclusion and alternatives.</p><p>Progress is held in this page’s memory. Download before closing; there is no login or automatic saving.</p></dialog>
-</body></html>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
+		<title>Market Match — Ad Street</title>
+		<style>
+html, body, #canvas {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+body {
+	color: white;
+	background-color: black;
+	overflow: hidden;
+	touch-action: none;
+}
+
+#canvas {
+	display: block;
+}
+
+#canvas:focus {
+	outline: none;
+}
+
+#status, #status-splash, #status-progress {
+	position: absolute;
+	left: 0;
+	right: 0;
+}
+
+#status, #status-splash {
+	top: 0;
+	bottom: 0;
+}
+
+#status {
+	background-color: #242424;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	visibility: hidden;
+}
+
+#status-splash {
+	max-height: 100%;
+	max-width: 100%;
+	margin: auto;
+}
+
+#status-splash.show-image--false {
+	display: none;
+}
+
+#status-splash.fullsize--true {
+	height: 100%;
+	width: 100%;
+	object-fit: contain;
+}
+
+#status-splash.use-filter--false {
+	image-rendering: pixelated;
+}
+
+#status-progress, #status-notice {
+	display: none;
+}
+
+#status-progress {
+	bottom: 10%;
+	width: 50%;
+	margin: 0 auto;
+}
+
+#status-notice {
+	background-color: #5b3943;
+	border-radius: 0.5rem;
+	border: 1px solid #9b3943;
+	color: #e0e0e0;
+	font-family: 'Noto Sans', 'Droid Sans', Arial, sans-serif;
+	line-height: 1.3;
+	margin: 0 2rem;
+	overflow: hidden;
+	padding: 1rem;
+	text-align: center;
+	z-index: 1;
+}
+		</style>
+		<link id="-gd-engine-icon" rel="icon" type="image/png" href="index.icon.png" />
+<link rel="apple-touch-icon" href="index.apple-touch-icon.png"/>
+<meta name="description" content="Market Match Ad Street: a Godot marketplace and advertising game.">
+	</head>
+	<body>
+		<canvas id="canvas">
+			Your browser does not support the canvas tag.
+		</canvas>
+
+		<noscript>
+			Your browser does not support JavaScript.
+		</noscript>
+
+		<div id="status">
+			<img id="status-splash" class="show-image--true fullsize--true use-filter--true" src="index.png" alt="">
+			<progress id="status-progress"></progress>
+			<div id="status-notice"></div>
+		</div>
+
+		<script src="index.js"></script>
+		<script>
+const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":true,"executable":"index","experimentalVK":true,"fileSizes":{"index.pck":37584,"index.wasm":37695054},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+const GODOT_THREADS_ENABLED = false;
+const engine = new Engine(GODOT_CONFIG);
+
+(function () {
+	const statusOverlay = document.getElementById('status');
+	const statusProgress = document.getElementById('status-progress');
+	const statusNotice = document.getElementById('status-notice');
+
+	let initializing = true;
+	let statusMode = '';
+
+	function setStatusMode(mode) {
+		if (statusMode === mode || !initializing) {
+			return;
+		}
+		if (mode === 'hidden') {
+			statusOverlay.remove();
+			initializing = false;
+			return;
+		}
+		statusOverlay.style.visibility = 'visible';
+		statusProgress.style.display = mode === 'progress' ? 'block' : 'none';
+		statusNotice.style.display = mode === 'notice' ? 'block' : 'none';
+		statusMode = mode;
+	}
+
+	function setStatusNotice(text) {
+		while (statusNotice.lastChild) {
+			statusNotice.removeChild(statusNotice.lastChild);
+		}
+		const lines = text.split('\n');
+		lines.forEach((line) => {
+			statusNotice.appendChild(document.createTextNode(line));
+			statusNotice.appendChild(document.createElement('br'));
+		});
+	}
+
+	function displayFailureNotice(err) {
+		console.error(err);
+		if (err instanceof Error) {
+			setStatusNotice(err.message);
+		} else if (typeof err === 'string') {
+			setStatusNotice(err);
+		} else {
+			setStatusNotice('An unknown error occurred.');
+		}
+		setStatusMode('notice');
+		initializing = false;
+	}
+
+	const missing = Engine.getMissingFeatures({
+		threads: GODOT_THREADS_ENABLED,
+	});
+
+	if (missing.length !== 0) {
+		if (GODOT_CONFIG['serviceWorker'] && GODOT_CONFIG['ensureCrossOriginIsolationHeaders'] && 'serviceWorker' in navigator) {
+			let serviceWorkerRegistrationPromise;
+			try {
+				serviceWorkerRegistrationPromise = navigator.serviceWorker.getRegistration();
+			} catch (err) {
+				serviceWorkerRegistrationPromise = Promise.reject(new Error('Service worker registration failed.'));
+			}
+			// There's a chance that installing the service worker would fix the issue
+			Promise.race([
+				serviceWorkerRegistrationPromise.then((registration) => {
+					if (registration != null) {
+						return Promise.reject(new Error('Service worker already exists.'));
+					}
+					return registration;
+				}).then(() => engine.installServiceWorker()),
+				// For some reason, `getRegistration()` can stall
+				new Promise((resolve) => {
+					setTimeout(() => resolve(), 2000);
+				}),
+			]).then(() => {
+				// Reload if there was no error.
+				window.location.reload();
+			}).catch((err) => {
+				console.error('Error while registering service worker:', err);
+			});
+		} else {
+			// Display the message as usual
+			const missingMsg = 'Error\nThe following features required to run Godot projects on the Web are missing:\n';
+			displayFailureNotice(missingMsg + missing.join('\n'));
+		}
+	} else {
+		setStatusMode('progress');
+		engine.startGame({
+			'onProgress': function (current, total) {
+				if (current > 0 && total > 0) {
+					statusProgress.value = current;
+					statusProgress.max = total;
+				} else {
+					statusProgress.removeAttribute('value');
+					statusProgress.removeAttribute('max');
+				}
+			},
+		}).then(() => {
+			setStatusMode('hidden');
+		}, displayFailureNotice);
+	}
+}());
+		</script>
+	</body>
+</html>
