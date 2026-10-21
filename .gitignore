@@ -1,0 +1,7 @@
+.godot/
+local-data/
+.DS_Store
+
+.build/
+*.zip
+!site/downloads/*.zip

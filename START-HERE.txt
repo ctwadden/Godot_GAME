@@ -1,0 +1,24 @@
+NOVA / GLOBAL LAUNCH — SCHOOL COMPUTER
+
+To play without installing anything:
+https://ctwadden.github.io/Godot_GAME/
+
+To open and edit this downloaded project:
+1. Extract the entire ZIP. Do not open project.godot from inside the ZIP.
+2. Open Godot 4.6.2 Standard (GDScript version).
+3. Choose Import and select project.godot in this extracted folder.
+4. Wait for the artwork to import, then press F5.
+5. Start in Learn and follow the introduction.
+
+Godot itself is not bundled. Running in the editor does not need export templates.
+No accounts, API keys or network connection are needed for editor play.
+
+School computers may restrict software installation; the browser version is
+available at the link above if GitHub Pages and WebAssembly are permitted.
+
+README.md: controls and technical notes.
+teaching-guide.md: learning targets, classroom use and coverage limits.
+
+Save keeps a local campaign. Report exports answers and decision evidence.
+Browser saves stay in that browser profile on that device; they do not follow
+you between school and home. Export your report before leaving.
