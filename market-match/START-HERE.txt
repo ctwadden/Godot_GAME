@@ -1,0 +1,5 @@
+MARKET MATCH / DATA CHOICES
+Open index.html in a modern browser. No installation or internet is needed after extracting this folder.
+Start with Expert demonstration, then try Student experiment.
+Read teacher-guide.md for learning targets, assumptions and discussion guidance.
+Published version: https://ctwadden.github.io/Godot_GAME/market-match/
