@@ -2,6 +2,20 @@
 
 A playable Godot 4.6.2 classroom management simulation about global sourcing, digital business records, work arrangements and stakeholder trade-offs. Original vector icons and a bundled Natural Earth coastline map work offline. The firms, financial values and event effects are fictional teaching assumptions.
 
+## Start with these two versions
+
+- Expert demo: https://ctwadden.github.io/Godot_GAME/site/play/?mode=demo
+- Guided student practice: https://ctwadden.github.io/Godot_GAME/site/play/?mode=student
+- Optional advanced campaign: https://ctwadden.github.io/Godot_GAME/site/play/?mode=campaign
+
+The native project starts at a mode chooser. The expert is an authored operations coach, not an online AI service. Eleven worked steps run real simulation actions and explain before/after states. Students then start a fresh ten-day company ($28,000; 80 chips, 10 screens, 80 batteries), with eight tasks, optional contextual advice, manual day advance and a post-run review. Assembly, delivery trucks and customer payments are automatic; buying parts and choosing expertise are player decisions. Demand increases from 20 to 30 on day 6. The practice event is a duplicate screen scan after 80 deliveries; the full campaign retains transport/random events.
+
+The 150-delivery target is a challenge, not a grade. Slower initial sea freight saves money but exposes the small screen buffer and can miss the target; a review and retry remain available. Replenish parts before they run out, considering cargo already ordered. A $500 practice contingency guard and an explicit review route prevent the audit stage from trapping a depleted company. The illustrative reference policy uses the same starting state and elapsed days, with near-supplier replenishment and training; it is not asserted to be optimal.
+
+Student practice saves to `user://student-practice.json`; the advanced campaign uses `user://campaign.json`. Demo actions do not touch those saves. Stage progress and answer fields survive student Save/Load. New-company controls intentionally start afresh; switching away saves the existing student attempt first. The advanced campaign remains available with its original controls and targets.
+
+New checks: `tests/coaching_test.gd` runs both freight choices and all three expertise choices through debrief; `tests/coached_ui_test.gd` exercises mode selection, actual guided controls, duplicate-purchase prevention, receipt gates, cash recovery and correct exported prompts. `tests/capture_modes.gd` renders mode previews.
+
 ## Share and download
 
 Student game: https://ctwadden.github.io/Godot_GAME/
@@ -12,7 +26,7 @@ The website includes a single-threaded browser build. Browser Report export down
 
 ## Start
 
-Open `project.godot` in Godot and press **F5**. Start with **Learn**: the seven-step introduction includes two real actions (place an order, advance a day). You can skip or revisit the guide. Mouse wheel scrolls the right panel. Buttons support keyboard focus. The logical 1440×900 canvas scales with the window; 1280×800 or larger is recommended. Space pauses; **+ Day** advances once; play advances automatically every 2.5 seconds at 1×. Learn and Report pause time automatically.
+Open `project.godot` in Godot and press **F5**. For the advanced campaign, start with **Learn**: the seven-step introduction includes two real actions (place an order, advance a day). You can skip or revisit the guide. Mouse wheel scrolls the right panel. Buttons support keyboard focus. The logical 1440×900 canvas scales with the window; 1280×800 or larger is recommended. Space pauses; **+ Day** advances once; play advances automatically every 2.5 seconds at 1×. Learn and Report pause time automatically.
 
 Deliver 900 phones by day 30, with at least 65 trust, 60 wellbeing and nonnegative cash. Game outcome is separate from understanding. Complete practice checks in Learn, write individual explanations in Report, and export evidence for teacher review. The teacher guide maps eight local “I can” targets to sources, mechanics, checks, feedback and transfer.
 

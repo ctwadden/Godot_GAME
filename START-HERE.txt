@@ -8,7 +8,8 @@ To open and edit this downloaded project:
 2. Open Godot 4.6.2 Standard (GDScript version).
 3. Choose Import and select project.godot in this extracted folder.
 4. Wait for the artwork to import, then press F5.
-5. Start in Learn and follow the introduction.
+5. Choose Watch the expert demo, then Try student practice.
+   The advanced campaign is available after these smaller versions.
 
 Godot itself is not bundled. Running in the editor does not need export templates.
 No accounts, API keys or network connection are needed for editor play.

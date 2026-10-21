@@ -21,6 +21,8 @@ func run_ui():
  var scene = load("res://main.tscn").instantiate()
  root.add_child(scene)
  await process_frame
+ scene.start_mode("campaign")
+ await process_frame
  check(scene.tab == 3 and not scene.sim.tutorial_done,"First run opens Learn")
  press(scene,"Next")
  await process_frame

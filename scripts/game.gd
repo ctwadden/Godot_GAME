@@ -1,6 +1,7 @@
 extends Control
 
 const Simulation = preload("res://scripts/simulation.gd")
+const Coaching = preload("res://scripts/coaching.gd")
 const Learning = preload("res://scripts/learning.gd")
 const VEHICLES = {"ship":preload("res://assets/ship.svg"),"plane":preload("res://assets/plane.svg"),"truck":preload("res://assets/truck.svg"),"factory":preload("res://assets/factory.svg"),"border":preload("res://assets/border.svg")}
 const HUB = Vector2(-63.6,44.7)
@@ -32,11 +33,22 @@ var previous_tab = -1
 var previous_intro_step = -1
 var tab_buttons: Array = []
 var show_targets = false
+var active_mode = "menu"
+var coach = Coaching.new()
+var role_label: Label
+var live_controls: Array = []
+var save_button: Button
+var load_button: Button
 
 func _ready():
  DisplayServer.window_set_title("Nova / Global Launch — Learning edition")
  load_coastlines()
  build_ui()
+ if OS.has_feature("web"):
+  var requested = str(JavaScriptBridge.eval("new URLSearchParams(window.location.search).get('mode') || 'menu'"))
+  if requested in ["demo","student","campaign"]:
+   start_mode(requested)
+   return
  refresh()
 
 func style(color: Color, radius: int = 12) -> StyleBoxFlat:
@@ -93,15 +105,19 @@ func build_ui():
  controls.position = Vector2(875,25)
  controls.add_theme_constant_override("separation",8)
  ui.add_child(controls)
- button("Run / Pause",func(): running = not running and not sim.ended; refresh(),controls,true)
- button("+ Day",func(): step(),controls)
- button("Speed",func(): speed = 3 if speed == 1 else 1; refresh(),controls)
- button("Save",func(): sim.notice = ("Saved in this browser on this device." if OS.has_feature("web") else "Campaign saved.") if sim.save_game() == OK else "Could not save campaign."; refresh(),controls)
- button("Load",func(): running = false; sim.notice = "Saved campaign loaded." if sim.load_game() else "No compatible saved campaign found."; tab = 3; refresh(),controls)
+ button("Modes",func(): show_modes(),controls)
+ live_controls.append(button("Run / Pause",func(): running = not running and not sim.ended; refresh(),controls,true))
+ live_controls.append(button("+ Day",func(): step(),controls))
+ live_controls.append(button("Speed",func(): speed = 3 if speed == 1 else 1; refresh(),controls))
+ save_button = button("Save",func(): save_active(),controls)
+ load_button = button("Load",func(): load_active(),controls)
  button("?",func(): show_help(),controls)
  status = label("",18)
  status.position = Vector2(32,100)
  ui.add_child(status)
+ role_label = label("YOU: buy parts, choose expertise, advance time. AUTO: assembly, trucks and payment.",14,TEAL)
+ role_label.position = Vector2(32,128)
+ ui.add_child(role_label)
  timer_label = label("",14,TEAL)
  timer_label.position = Vector2(35,150)
  ui.add_child(timer_label)
@@ -151,7 +167,8 @@ func paragraph(text: String, color: Color = MUTED):
 func heading(text: String): content.add_child(label(text,24))
 
 func refresh():
- status.text = "$%s CASH     %d / 900 DELIVERED     %d WAITING     %d%% TRUST     %d%% WELLBEING" % [sim.cash,sim.delivered,sim.backlog,sim.trust,sim.wellbeing]
+ var target = 150 if active_mode == "student" else 900
+ status.text = "$%s CASH     %d / %d DELIVERED     %d WAITING     %d%% TRUST     %d%% WELLBEING" % [sim.cash,sim.delivered,target,sim.backlog,sim.trust,sim.wellbeing]
  timer_label.text = "DAY %02d / 30    •    %s    •    %dx SPEED    /    SELECT A SUPPLIER ON THE MAP" % [mini(sim.day,30),"FINISHED" if sim.ended else ("LIVE" if running else "PAUSED"),speed]
  ticker.text = "OPERATIONS BRIEF   /   " + sim.notice
  for child in content.get_children():
@@ -163,6 +180,20 @@ func refresh():
  previous_tab = tab
  previous_intro_step = sim.tutorial_step
  for i in range(tab_buttons.size()): tab_buttons[i].add_theme_stylebox_override("normal",style(Color("234b50") if i == tab else Color("20324c"),8))
+ for control in live_controls: control.disabled = active_mode != "campaign"
+ save_button.disabled = active_mode not in ["student","campaign"]
+ load_button.disabled = active_mode not in ["student","campaign"]
+ for control in tab_buttons: control.visible = active_mode == "campaign"
+ if active_mode == "menu":
+  status.text = "CHOOSE A DEMONSTRATION OR A FRESH STUDENT COMPANY"
+  menu_ui()
+  queue_redraw()
+  return
+ if active_mode in ["demo","student"]:
+  if active_mode == "demo": status.text = "EXPERT WORKED EXAMPLE / $%d CASH / %d RECEIVED BY CUSTOMERS" % [sim.cash,sim.delivered]
+  coached_ui()
+  queue_redraw()
+  return
  match tab:
   0: supply_ui()
   1: people_ui()
@@ -275,14 +306,16 @@ func export_report(path: String = "user://nova-report.txt"):
  if f == null:
   sim.notice = "Could not write the report."
  else:
-  var report = "NOVA / GLOBAL LAUNCH — LEARNING AND DECISIONS\nScenario seed %d / random events %s\nDelivered %d | Cash $%d | Trust %d | Wellbeing %d | Emissions %d model units\n\nI CAN TARGETS\n%s\n\n" % [sim.seed_value,str(sim.random_events),sim.delivered,sim.cash,sim.trust,sim.wellbeing,sim.emissions,"\n".join(Learning.TARGETS)]
-  for question in Learning.CHECKS:
+  var report = "NOVA / GLOBAL LAUNCH — LEARNING AND DECISIONS\nVersion: " + active_mode + "\nScenario seed %d / random events %s\nDelivered %d | Cash $%d | Trust %d | Wellbeing %d | Emissions %d model units\n\nI CAN TARGETS\n%s\n\n" % [sim.seed_value,str(sim.random_events),sim.delivered,sim.cash,sim.trust,sim.wellbeing,sim.emissions,"\n".join(Learning.TARGETS)]
+  if active_mode == "student":
+   report += "STUDENT PRACTICE STATE\n" + JSON.stringify(coach.pack(),"  ") + "\n\nEXPERT REVIEW\n" + coach.review() + "\n\n"
+  for question in (Learning.CHECKS if active_mode == "campaign" else []):
    report += question.question + "\n"
    var attempts = sim.answers.get(question.id,[])
    if attempts.is_empty(): report += "[not yet answered]\n"
    for attempt in attempts: report += "Day %d: %s — %s\n" % [int(attempt.day),question.choices[int(attempt.choice)],"correct after feedback/retry available" if attempt.correct else "retry needed"]
   report += "\nEXPLANATIONS (teacher review; no automatic grade)\n"
-  for item in Learning.REFLECTIONS: report += item.prompt + "\n" + sim.reflections.get(item.id,"[not yet answered]") + "\n\n"
+  for item in (Coaching.PRACTICE_REFLECTIONS if active_mode == "student" else Learning.REFLECTIONS): report += item.prompt + "\n" + sim.reflections.get(item.id,"[not yet answered]") + "\n\n"
   report += "DAILY RECORDS\n" + JSON.stringify(sim.history,"  ") + "\n\nEVENTS\n" + JSON.stringify(sim.events_seen,"  ") + "\n\nDECISIONS\n" + "\n".join(sim.journal)
   f.store_string(report)
   f.close()
@@ -294,6 +327,7 @@ func export_report(path: String = "user://nova-report.txt"):
  refresh()
 
 func step():
+ if active_mode != "campaign": return
  var event_count = sim.events_seen.size()
  sim.advance()
  elapsed = 0
@@ -311,15 +345,19 @@ func step():
 func _process(delta):
  animation += delta
  last_delta = delta
- if running and not sim.ended:
+ if active_mode == "campaign" and running and not sim.ended:
   elapsed += delta * speed
   if elapsed >= 2.5:
    elapsed = 0
    step()
- timer_label.text = "DAY %02d / 30    •    %s    •    %dx SPEED" % [mini(sim.day,30),"FINISHED" if sim.ended else ("LIVE" if running else "PAUSED"),speed]
+ if active_mode == "campaign":
+  timer_label.text = "ADVANCED CAMPAIGN / DAY %02d OF 30 / %s / %dx SPEED" % [mini(sim.day,30),"FINISHED" if sim.ended else ("LIVE" if running else "PAUSED"),speed]
+ else:
+  timer_label.text = "CHOOSE A VERSION" if active_mode == "menu" else ("EXPERT DEMO / YOU CONTROL THE PACE" if active_mode == "demo" else "STUDENT PRACTICE / DAY %d OF 10 / MANUAL ADVANCE" % mini(sim.day,10))
  if running: queue_redraw()
 
 func _input(event):
+ if active_mode != "campaign": return
  if popup.visible or get_viewport().gui_get_focus_owner() is TextEdit or get_viewport().gui_get_focus_owner() is LineEdit: return
  if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_SPACE:
   running = not running and not sim.ended
@@ -492,6 +530,7 @@ func _draw():
  icon("truck",Vector2(248,710),24)
  text_at(Vector2(268,716),"DOMESTIC",11,MUTED)
  text_at(Vector2(48,756),"%d inbound lots  /  %d phones in delivery  /  %d per day assembly" % [sim.shipments.size(),sim.dispatched(),sim.capacity()],14)
+ text_at(Vector2(48,777),"USABLE PARTS: %d processors / %d screens / %d batteries" % sim.inventory,14,TEAL)
  draw_line(Vector2(410,720),Vector2(700,720),MUTED,2,true)
  icon("factory",Vector2(410,710),32)
  draw_style_box(style(Color("294a55"),4),Rect2(688,691,35,35))
@@ -501,3 +540,161 @@ func _draw():
   icon("truck",Vector2(440+move_fraction*220,708),30)
  text_at(Vector2(445,697),"1 day delivery",11,MUTED)
  text_at(Vector2(445,740),"%d received / %d awaiting assembly" % [sim.delivered,sim.backlog],12,MUTED)
+
+func show_modes():
+ if active_mode == "student": save_active(false)
+ active_mode = "menu"
+ running = false
+ tab = 3
+ scroll_view.scroll_vertical = 0
+ refresh()
+
+func start_mode(mode: String):
+ if active_mode == "student": save_active(false)
+ active_mode = mode
+ running = false
+ tab = 3
+ scroll_view.scroll_vertical = 0
+ if mode in ["student","demo"]:
+  coach = Coaching.new(mode)
+  sim = coach.sim
+ else: sim = Simulation.new()
+ refresh()
+
+func save_active(announce: bool = true):
+ var path = "user://campaign.json"
+ if active_mode == "student":
+  sim.reflections["_guided_state"] = coach.pack()
+  path = "user://student-practice.json"
+ var result = sim.save_game(path)
+ if announce:
+  sim.notice = ("Saved in this browser on this device." if OS.has_feature("web") else "Progress saved.") if result == OK else "Could not save progress."
+  refresh()
+
+func load_active():
+ var path = "user://student-practice.json" if active_mode == "student" else "user://campaign.json"
+ var loaded = Simulation.new()
+ if not loaded.load_game(path):
+  sim.notice = "No compatible save for this version."
+ else:
+  sim = loaded
+  if active_mode == "student":
+   coach.sim = sim
+   coach.restore(sim.reflections.get("_guided_state",{}))
+  sim.notice = "Saved progress loaded."
+ running = false
+ tab = 3
+ refresh()
+
+func menu_ui():
+ heading("Watch first. Then try.")
+ paragraph("Start with the expert demo. It shows what to buy, when to wait and why hiring serves a different purpose.",INK)
+ button("1. Watch the expert demo",func(): start_mode("demo"),content,true)
+ paragraph("An eleven-step worked example. You control the pace. The expert explains every action and shows its effects in the live simulation.")
+ button("2. Try student practice",func(): start_mode("student"),content,true)
+ paragraph("One task at a time. Deliver 150 phones in ten days, ask for advice, then review your choices. Starting stock is 80 chips, 10 screens and 80 batteries.")
+ if FileAccess.file_exists("user://student-practice.json"):
+  button("Continue saved student practice",func(): start_mode("student"); load_active(),content)
+ button("Advanced: full 30-day campaign",func(): start_mode("campaign"),content)
+ paragraph("The advanced campaign keeps the original larger budget, targets and disruption modes. Demo, practice and campaign use separate progress; watching the demo does not alter a saved company.")
+
+func coached_ui():
+ if active_mode == "demo":
+  heading("Expert demonstration")
+  paragraph("%d / %d  %s" % [coach.stage+1,Coaching.DEMO.size(),Coaching.DEMO[coach.stage].title],TEAL)
+  if coach.stage < Coaching.DEMO.size()-1:
+   button("Next: watch the expert's decision",func(): coach.demo_next(); scroll_view.scroll_vertical = 0; refresh(),content,true)
+  else:
+   button("Now try a fresh student company",func(): start_mode("student"),content,true)
+  paragraph(Coaching.DEMO[coach.stage].why,INK)
+  training_status()
+  return
+ heading("Student practice")
+ paragraph("REVIEW YOUR PRACTICE" if coach.stage == 8 else "TASK %d / 8: %s" % [coach.stage+1,Coaching.TASKS[coach.stage]],TEAL)
+ paragraph("USABLE: chips %d / screens %d / batteries %d" % sim.inventory,TEAL)
+ if coach.stage == 8:
+  training_review_ui()
+  return
+ # The decision controls precede the explanation so they stay easy to find.
+ if coach.can_continue(): button("Task complete — continue",func(): coach.next_task(); scroll_view.scroll_vertical = 0; refresh(),content,true)
+ button("Ask the operations coach",func(): coach.feedback = coach.advice(); refresh(),content)
+ if not coach.feedback.is_empty(): paragraph(coach.feedback,TEAL)
+ match coach.stage:
+  0:
+   paragraph("80 chips. 10 screens. 80 batteries. Capacity: 30 phones/day. Which shortage should you solve before hiring?",INK)
+   for i in range(3):
+    var index = i
+    button(["Buy more processors","Buy more screens","Hire an engineer first"][i],func(): coach.answer(index); refresh(),content)
+  1:
+   paragraph("Buy 40 screens. Air: $4,200, one travel day plus clearance. Sea: $3,000, four travel days plus clearance. Predict what happens to your existing 10-screen buffer while you wait.",INK)
+   if not coach.first_order:
+    button("Order screens by air · $4,200",func(): coach.purchase(1,true); refresh(),content)
+    button("Order screens by sea · $3,000",func(): coach.purchase(1,false); refresh(),content)
+  2:
+   button("Advance one day: follow the shipment",func(): practice_advance(),content,true).disabled = coach.can_continue()
+   paragraph("Advance until the screens are physically received. Travel, border clearance and receipt are separate. Existing stock may support some assembly while you wait. Do not buy another lot just because the first one is still in transit.",INK)
+  3:
+   button("Advance one day: follow the delivery truck",func(): practice_advance(),content,true).disabled = coach.can_continue()
+   paragraph("Reach 30 customer receipts. There is no Deliver button: assembly dispatches trucks automatically, then customer receipt generates revenue on the next turn. If no parts are available, waiting alone cannot produce more phones.",INK)
+  4:
+   paragraph("New goal: begin research on a better phone. Choose ONE approach. None creates physical components. Employee salary continues after release. External R&D daily overhead stops at release.",INK)
+   if coach.expertise.is_empty():
+    button("Train existing staff · $2,500 / +4 per day",func(): coach.choose_expertise("train"); refresh(),content)
+    button("Hire engineer · $4,200 + $280/day / +8",func(): coach.choose_expertise("hire"); refresh(),content)
+    button("External Canadian studio · $6,500 + $450/day",func(): coach.choose_expertise("external"); refresh(),content)
+   paragraph("Hiring/training adds internal capability here. Selecting the external Canadian studio outsources R&D but does not offshore it.")
+  5,7:
+   button("Advance one day: assemble and deliver",func(): practice_advance(),content,true).disabled = coach.can_continue()
+   paragraph("%s Keep purchasing the parts that your stock and incoming cargo show you need. Buying is your decision; assembly, delivery and payment are automatic. Demand rises from 20 to 30/day on day 6." % ("Reach 80 deliveries." if coach.stage == 5 else "Reach 150 deliveries by day 10."),INK)
+   paragraph("NEXT CHECK: compare each usable stock with incoming parts and lead times. Ask the coach if you want a recommendation.",TEAL)
+   practice_orders_ui()
+  6:
+   paragraph("A duplicate scan overstates screens by 60. Compare physical and recorded values below. Fix the record before using it to plan another purchase. This planned information fault is the practice event; the advanced campaign adds transport disruptions.",INK)
+   button("Audit and reconcile records · $500",func(): coach.audit(); refresh(),content).disabled = coach.audited or sim.cash < 500
+   if sim.cash < 500:
+    paragraph("There is not enough cash for the audit. End this attempt and review how the budget reached this point. You can retry; no learning result is marked as passed.")
+    button("End this attempt and review",func(): coach.stage = 8; refresh(),content)
+ training_status()
+
+func practice_advance():
+ coach.advance()
+ scroll_view.scroll_vertical = 0
+ refresh()
+
+func practice_orders_ui():
+ for i in range(3):
+  var index = i
+  var supplier = sim.suppliers[i]
+  content.add_child(label("40 " + ["processors","screens","batteries"][i],16))
+  var row = HBoxContainer.new()
+  content.add_child(row)
+  button("Sea $%d · %dd + border" % [supplier.price*40+400,supplier.days],func(): coach.purchase(index,false); refresh(),row)
+  button("Air $%d · 1d + border" % [supplier.price*40+1600],func(): coach.purchase(index,true); refresh(),row)
+ button("40 nearby complete sets · truck 2d · $10,100",func(): coach.purchase(3,false); refresh(),content)
+
+func training_status():
+ paragraph("LIVE EVIDENCE",TEAL)
+ paragraph("Usable: %d chips / %d screens / %d batteries\nRecorded screens: %d\nInbound lots: %d / phones on trucks: %d / customers received: %d\nR&D: %s / %d points per day" % [sim.inventory[0],sim.inventory[1],sim.inventory[2],sim.recorded_stock()[1],sim.shipments.size(),sim.dispatched(),sim.delivered,sim.RESEARCH_OPTIONS[sim.research_mode].name,sim.research_rate()],INK)
+ for shipment in sim.shipments:
+  paragraph("%s: %s, %s, %d turns remaining%s" % [sim.suppliers[shipment.supplier].name,shipment.mode,shipment.stage,shipment.remaining," + clearance" if shipment.stage == "travel" and shipment.supplier != 3 else ""])
+ if not sim.history.is_empty():
+  var last = sim.history.back()
+  paragraph("LAST TURN: %d assembled / %d received by customers / cash now $%d" % [last.assembled,last.arrived,last.cash])
+
+func training_review_ui():
+ paragraph("TARGET REACHED — EXPLAIN YOUR DECISIONS" if sim.delivered >= 150 else "ATTEMPT COMPLETE — REVIEW AND RETRY",TEAL)
+ paragraph(coach.review(),INK)
+ paragraph("EXPLAIN IT YOURSELF",TEAL)
+ for item in Coaching.PRACTICE_REFLECTIONS:
+  paragraph(item.prompt)
+  var edit = TextEdit.new()
+  edit.custom_minimum_size = Vector2(450,90)
+  edit.wrap_mode = TextEdit.LINE_WRAPPING_BOUNDARY
+  edit.text = sim.reflections.get(item.id,"")
+  var key = item.id
+  edit.text_changed.connect(func(): sim.reflections[key] = edit.text)
+  content.add_child(edit)
+ button("Download my practice and expert review",func(): export_report(),content,true)
+ button("Watch the expert demo again",func(): start_mode("demo"),content)
+ button("Try a fresh student company",func(): start_mode("student"),content)
+ button("Ready for the advanced campaign",func(): start_mode("campaign"),content)

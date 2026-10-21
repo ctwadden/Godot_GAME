@@ -1,6 +1,25 @@
-# Nova / Global Launch: learning contract v2
+# Nova / Global Launch: learning contract v3
 
 Local draft for teacher review, 21 October 2026. Built and desk-checked; not yet tried with students or accepted as a complete unit. These are proposed local “I can” statements, not verbatim IB outcomes or registered assessment targets.
+
+
+## Demo then student practice (current entry sequence)
+
+The default entry now offers an authored expert demonstration, guided student practice, and the optional advanced campaign. The original full-campaign target map below still applies to the advanced mode; practice targets are a bounded subset, not a claim that every chapter target has been independently demonstrated.
+
+First watch the eleven-step worked example (estimated 5–8 minutes). The coach runs actual transactions and explicitly names what the player controls versus what the game performs automatically. Follow money and parts separately, distinguish border receipt, assembly, truck dispatch and customer arrival, and explain why a bottleneck demands parts while a research goal may demand expertise. The expert briefly compares R&D arrangements; consecutive purchases are demonstrations, not a recommended optimal spending plan. After the first ten phones, backlog makes the next assembly batch thirty, which the narration explains.
+
+Then start a fresh student company (estimated 10–20 minutes, untried with students). Eight tasks move from diagnosing screens, purchasing, receipt and customer delivery to one expertise choice, replenishment, a planned record fault and a ten-day 150-delivery challenge. Early stages expose only relevant controls. Current usable stock remains visible. Contextual advice is optional and logged; ask students to explain their own diagnosis before requesting it. Modes stop time while reading/writing. There is no Deliver action: day advancement moves automatic operations.
+
+A slow first sea order is a real trade-off: it saves $1,200 but the starting ten screens cannot cover its lead time. Technical tests show a feasible air-first strategy reaching 160–170 deliveries in nine days; tested sea-first strategies reach 110 in ten days and receive a debrief rather than a passing grade. The target is not an assessment judgement. Discuss the delay and retry rather than treating a student's initially reasonable cost preference as a character failure.
+
+The duplicate scan triggers after eighty deliveries and changes records, not physical screens. A protected $500 reserve and a review exit if cash is nevertheless too low prevent a forced audit from trapping a learner. Practice does not add random disasters before these dependencies are understood. The advanced campaign retains fixed and seeded disruption modes.
+
+The end coach uses the student's actual stock, selected R&D approach, costs, deliveries, zero-assembly days and emissions. It also runs an illustrative policy for the same elapsed days, initial company and demand schedule: initial air screens, nearby sets when projected minimum stock falls below seventy, and existing-staff training from day four. The scan triggers independently in each run after eighty deliveries; the review states whether each actually reached it. This is one alternative, not a claim of optimality or a controlled causal effect of one isolated choice.
+
+Students provide individual explanations of parts versus expertise, the limits of an audit, and a new provider/location transition. The exported report labels the mode and includes the actual practice prompts and choices. These responses, followed by an oral question or changed-case retry, provide stronger learning evidence than the delivery target. Staff salaries continue after product release; external R&D daily overhead ends at release. IP retention, contractor quality and labour conditions remain missing evidence, not calculated outcomes.
+
+State: local model/UI tests and an independent pedagogical desk review informed corrections. Student comprehension and pacing remain untested. No new grading, LMS posting or whole-chapter attainment is implied.
 
 ## Sources and scope
 
