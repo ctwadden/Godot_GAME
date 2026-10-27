@@ -57,14 +57,21 @@ func _draw():
    arrow(Vector2(380,190),Vector2(480,190));arrow(Vector2(870,190),Vector2(970,190))
    text("Account records change; no physical note travels through the network.",Vector2(180,352),27,GOLD)
   "shared":
-   text("ONE SHARED UPDATE",Vector2(65,65),27,TEAL)
-   text("Toy rule: 2 of 3 agree",Vector2(810,65),29,GOLD)
+   text("THREE SHOPS / ONE COMMON VOUCHER RECORD",Vector2(65,54),27,TEAL)
    for i in range(3):
     var x=65+i*430
     var down=phase==2 and i==0
-    node(Rect2(x,112,365,170),"COMPUTER "+["A","B","C"][i],"Unavailable" if down else "Copy of record\nChecks agreed rules",Color("55495e") if down else Color("28435c"))
-    if i<2:arrow(Vector2(x+375,198),Vector2(x+415,198),not down)
-   text("Other networks have different agreement and failure rules.",Vector2(235,350),28,MUTED)
+    node(Rect2(x,101,365,170),"SHOP "+["A","B","C"][i]+" / COMPUTER","Temporarily offline" if down else "Copy of voucher record\nChecks agreed rules",Color("55495e") if down else Color("28435c"))
+    if i<2:arrow(Vector2(x+375,185),Vector2(x+415,185),not down)
+   if phase==0:
+    text("Which account holds the vouchers? Have they already been spent?",Vector2(180,320),28,GOLD)
+    text("No single shop controls the common record alone.",Vector2(350,370),25,MUTED)
+   elif phase==1:
+    text("Check the transfer, then agree on the update.",Vector2(350,320),29,GOLD)
+    text("2 of 3 approvals is an illustration, not a universal network rule.",Vector2(240,370),25,MUTED)
+   else:
+    text("Other sites may continue / coordination still has a cost.",Vector2(300,320),28,GOLD)
+    text("A trusted central database can be simpler. Shared does not mean anonymous.",Vector2(170,370),25,MUTED)
   "crypto":
    node(Rect2(80,95,460,205),"DIGITAL ASSET","What is transferred",Color("36574e"))
    arrow(Vector2(560,192),Vector2(780,192))

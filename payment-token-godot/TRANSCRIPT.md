@@ -50,21 +50,21 @@ Electronic records can make payments convenient to process and reconcile. Access
 
 Optional question: What moved in this account-payment illustration?
 
-## 4. A shared ledger has several copies
+## 4. Why share a transaction record?
 
 ### What happens
 
-Now several computers maintain copies of a shared transaction record. In this classroom example, at least two of three authorized computers must agree before an update is accepted. This is a toy rule, not a real payment network.
+Imagine three shops accepting the same fictional vouchers. They need a consistent record of which account holds the vouchers and which have already been spent. Each shop keeps a copy, rather than giving one shop sole control of the record.
 
 ### Why it happens
 
-The computers follow agreed rules for validating and recording an update. Blockchain is one way of organizing shared records. Different networks use different agreement methods; they do not all use proof of work.
+Before recording a transfer, the computers check authorization and available funds using agreed rules. The aim is to keep their records consistent and prevent the same funds being spent twice. Our two-out-of-three approval rule is only a classroom illustration, not how every real network works.
 
 ### The impact
 
-Sharing records changes the dependencies and who must be trusted. One unavailable computer need not stop this example, but losing enough computers can. Shared records do not guarantee privacy: aliases can still be linked to people.
+A shared record can reduce dependence on one organization and let others continue when one site is unavailable, if their agreement rules allow it. It adds coordination and communication work. A central database may be simpler when everyone trusts its operator. Shared records do not guarantee anonymity.
 
-Optional question: One computer fails in this toy two-of-three system. Two remain available. What follows?
+Optional question: Why might these shops choose a shared ledger?
 
 ## 5. Cryptocurrency is not the ledger itself
 
