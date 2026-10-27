@@ -1,5 +1,9 @@
 # Nova / Global Launch
 
+## Worker or robot? — standalone explainer
+
+[Open the interactive explainer](https://ctwadden.github.io/Godot_GAME/worker-robot-explainer/). Compare the same job, worker wages, paid robot supervision, output, costs and cumulative business profit under editable fictional assumptions. No campaign is required. Source, transparent model and calculation tests are in `worker-robot-explainer/`.
+
 A playable Godot 4.6.2 classroom management simulation about global sourcing, digital business records, work arrangements and stakeholder trade-offs. Original vector icons and a bundled Natural Earth coastline map work offline. The firms, financial values and event effects are fictional teaching assumptions.
 
 ## Start with these two versions

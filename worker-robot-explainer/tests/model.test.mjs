@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';import {DEFAULTS,validate,daily,result,crossover,visual} from '../model.mjs';let n=0;const test=(name,fn)=>{fn();console.log('PASS '+name);n++;};
+test('default full-day outputs and business profit',()=>{assert.equal(daily(DEFAULTS).units,48);assert.equal(daily(DEFAULTS,true).units,80);assert.equal(daily(DEFAULTS).profit,864);assert.equal(daily(DEFAULTS,true).profit,1672);});
+test('upfront cost exists before production',()=>{assert.equal(result(DEFAULTS,0).profit,0);assert.equal(result(DEFAULTS,0,true).profit,-18000);assert.equal(result(DEFAULTS,0,true).units,0);});
+test('30-day output, pay and cost accounting',()=>{const w=result(DEFAULTS,30),r=result(DEFAULTS,30,true);assert.equal(w.units,1440);assert.equal(w.profit,25920);assert.equal(w.pay,5760);assert.equal(r.units,2400);assert.equal(r.profit,32160);assert.equal(r.pay,1440);for(const p of[w,r])assert.equal(p.profit,p.revenue-p.costs);});
+test('catch-up uses first full day',()=>{assert.equal(crossover(DEFAULTS).day,23);assert(result(DEFAULTS,22,true).profit<result(DEFAULTS,22).profit);assert(result(DEFAULTS,23,true).profit>result(DEFAULTS,23).profit);});
+test('low demand limits both, idle pay still charged',()=>{const a={...DEFAULTS,demand:20};assert.equal(daily(a).units,20);assert.equal(daily(a,true).units,20);assert.equal(result(a,1).pay,192);assert.equal(result(a,1,true).operating,40);assert.equal(crossover(a).day,174);});
+test('zero demand has no sales but scheduled costs',()=>{const a={...DEFAULTS,demand:0};assert.equal(result(a,5).units,0);assert.equal(result(a,5).profit,-960);assert.equal(result(a,5,true).profit,-18440);assert.equal(visual(a,1,true).progress,0);});
+test('partial days only count whole completed units',()=>{assert.equal(result(DEFAULTS,.5).units,24);assert.equal(result(DEFAULTS,.5,true).units,48);assert.equal(result(DEFAULTS,.01).units,0);});
+test('visual progress uses actual batch goal and shared time',()=>{assert.equal(visual(DEFAULTS,.5).progress,.5);assert.equal(visual(DEFAULTS,.5,true).progress,.6);assert.equal(visual(DEFAULTS,1).progress,1);assert.equal(visual(DEFAULTS,1.25).progress,.25);assert.equal(visual(DEFAULTS,30,true).active,false);});
+test('expensive robot can lose within horizon',()=>{const a={...DEFAULTS,purchase:60000};assert(result(a,30,true).profit<result(a,30).profit);assert.equal(crossover(a).day,75);});
+test('no crossover when robot daily profit is lower',()=>{assert.equal(crossover({...DEFAULTS,running:2000}).day,null);});
+test('zero purchase and equal rates/costs tie',()=>{const a={...DEFAULTS,purchase:0,robotRate:6,supervision:8,running:0};assert.equal(crossover(a).tied,true);});
+test('negative margin is kept as a loss',()=>{const a={...DEFAULTS,price:10};assert(result(a,30).profit<0);assert(result(a,30,true).profit<0);});
+test('bad inputs rejected without silent coercion',()=>{assert(validate({...DEFAULTS,price:NaN}));assert(validate({...DEFAULTS,supervision:9}));assert(validate({...DEFAULTS,days:1.5}));assert.equal(validate(DEFAULTS),'');});
+test('zero speed cannot create units and clamps time',()=>{const a={...DEFAULTS,workerRate:0};assert.equal(result(a,4).units,0);assert.equal(visual(a,4).active,false);assert.equal(result(a,-1).time,0);assert.equal(result(a,100).time,30);});
+console.log(`${n} tests passed`);
