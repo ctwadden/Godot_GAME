@@ -1,25 +1,21 @@
-# Payment & Token Lab
+# Payments & Tokens — One Idea at a Time
 
-Standalone Godot 4.6.2 Standard classroom demonstration. Import project.godot and press F5. The editable project requires no plugins. Approximately two 15-minute modes, not yet timed with students.
+Godot 4.6.2 Standard demonstration. Import project.godot and press F5.
 
-- Mode A: cash / central mobile ledger / simplified shared ledger; four customer situations; shop policy, explicit outage and accessible-terminal assumptions; transfer traces and separate access/fee/work results.
-- Mode B: actual original SVG bytes copied between three virtual in-memory folders; one collection/token record; control transfer; explicit fictional licence; simulated broken external media host; evidence matching.
-- Static discussion: five $2 items total $10 in fake worksheet dollars; fixed versus random-reward disclosure; paraphrased historical chapter case about e-trading access, restrictions and risk. No purchase, draw or trade controls.
-- Optional paced demos, independent exploration, three exit questions and local text report export.
+This replaces the earlier dashboard lab with a linear explanatory lesson. Eleven ideas each have three narrated parts: what happens, why it happens, and the impact. There are 33 bundled synthetic voice recordings, about seven minutes in total; no live speech or AI service is required. Captions match the narration. Each idea waits for the learner before continuing. An optional question appears after the impact narration, with an explanation and no score. Silent reading is available from the start.
 
-All balances, fees, times, access provisions, consensus rules and licence terms are fictional teaching assumptions. No value, wallet integration, keys, real identities or financial service calls. The `.invalid` media address is text only; it is never requested. Normal web hosting loads static Godot files; no live financial network is used. This is conceptual teaching, not investment, tax or legal advice.
+Controls: Start with narration / Read without sound; Pause/Resume; Replay; Sound on/off; Back; Next part; Next idea. Questions can always be skipped. Browser audio starts only after the learner presses Start. Check the device volume if narration is silent. Keyboard focus follows normal Godot controls. Desktop/projector recommended; canvas rendering is not a complete semantic screen-reader interface. TRANSCRIPT.md provides the complete text alternative.
 
-The onscreen L1 licence is a fictional evidence card, not the licence governing this source project. The original SVG was created for this lab and can be adapted for teaching. No textbook pages or third-party financial images are bundled.
+The visuals are simplified explanations, not a financial model. All credits, register identifiers and licence terms are fictional. There are no purchases, random-reward draws, wallets, market predictions, account logins or student-data fields. The e-trading scene is historical source analysis. No financial, legal or tax advice is provided. The fictional L1 card is instructional evidence, not the licence for these project files.
 
-Desktop/projector recommended. Mouse/touch and normal Godot keyboard controls are supported; the canvas is not a full semantic screen-reader UI. DESIGN-BRIEF.md contains an equivalent text sample round. Two 15-minute lesson estimates and student comprehension remain untested.
+Content: currency/payment methods; cash; central account records; shared ledgers; cryptocurrency; file versus token; licence permissions; broken media link; cashless access; cumulative small purchases; e-trading access/power/risk.
 
-Run tests inside this project:
+Source JSON: assets/lessons.json. Audio: assets/narration/. The transcript hashes in its manifest detect caption/audio drift. Narration was generated locally with macOS's installed Samantha voice at 155 words/minute. tools/render_narration.py regenerates it on a Mac with that voice installed. Playback elsewhere requires only the bundled WAV files, not macOS or that voice.
 
-    godot --headless --path . --script tests/model_test.gd
-    godot --headless --path . --script tests/ui_test.gd
+Test after Godot asset import:
 
-Rendering check: `godot --path . --script tests/capture.gd`.
+    godot --headless --path . --script tests/lesson_test.gd
 
-Web export preset targets ../payment-token-lab/index.html in the classroom repository. It includes the raw SVG bytes as harbour-source.txt (identical to harbour.svg) as well as the imported texture, so the byte-copy and fingerprint exercise works in the exported build. Test the export over HTTP; do not double-click its HTML. The source ZIP is for Godot editor play, not a standalone browser folder.
+Export Web with the preset into ../payment-token-lab/index.html in the classroom repository. Serve over HTTP, not file://. The source ZIP is for Godot editor play. The web export is the same Godot lesson.
 
-Read teaching-guide.md for source distinctions, lesson sequence, limitations and initial pilot checks.
+Technical playback, transcript matching, watch-before-question flow and rendered layouts are checked. Student comprehension and classroom pacing remain untested. Read teaching-guide.md for source boundaries and a short classroom plan.

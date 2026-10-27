@@ -1,9 +1,11 @@
-PAYMENT & TOKEN LAB — GODOT
+PAYMENTS & TOKENS — ONE IDEA AT A TIME
 
-Extract the entire ZIP. Open Godot 4.6.2 Standard, choose Import and select project.godot. Wait for import, then press F5. Godot itself is not included; no extra plugins are needed.
+Extract the ZIP. Import project.godot into Godot 4.6.2 Standard and press F5.
+Choose Start with narration or Read without sound.
+Watch What happens, Why it happens, and The impact for one idea.
+Pause, replay or go back as needed. Continue to the next idea when ready.
+Each question is optional and appears after the explanation.
 
-Choose Demonstrate Mode A or B for a teacher-paced walkthrough, or select independent exploration. Controls never connect to a financial service. Everything is fictional.
-
-Use Discussion for the static cost worksheet and historical e-trading source questions. Save/download the local evidence report before reloading or closing. Do not enter names or personal information.
-
-Browser play: https://ctwadden.github.io/Godot_GAME/payment-token-lab/
+Recorded audio is included. No account, microphone or live AI connection.
+Full text alternative: TRANSCRIPT.md.
+Browser version: https://ctwadden.github.io/Godot_GAME/payment-token-lab/

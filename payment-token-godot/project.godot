@@ -1,6 +1,6 @@
 config_version=5
 [application]
-config/name="Payment & Token Lab"
+config/name="Payments & Tokens — One Idea at a Time"
 run/main_scene="res://main.tscn"
 [display]
 window/size/viewport_width=1440

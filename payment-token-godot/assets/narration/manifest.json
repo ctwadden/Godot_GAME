@@ -1,0 +1,171 @@
+{
+  "voice": "Samantha (English (US))",
+  "words_per_minute": 155,
+  "clips": [
+    {
+      "file": "lesson-00-0.wav",
+      "caption_sha256": "60baa609c561a3dd709d824caccfc834648f025f052ccb8be8b4d08197c831ed",
+      "duration_seconds": 11.502
+    },
+    {
+      "file": "lesson-00-1.wav",
+      "caption_sha256": "b639ec39ffcec4f0cc5812fcb7a2cac32629b6409ad212bccabf7b2c7641ed2b",
+      "duration_seconds": 11.759
+    },
+    {
+      "file": "lesson-00-2.wav",
+      "caption_sha256": "1f2bd10b011bc421414f345b9bc2b5333a836fa7fdb28d68a0455dd453aca5e0",
+      "duration_seconds": 8.986
+    },
+    {
+      "file": "lesson-01-0.wav",
+      "caption_sha256": "eb56d26fc71b05215324764cea8f8b175f469d65ca1fa3482d6f2fba60af0fdb",
+      "duration_seconds": 11.785
+    },
+    {
+      "file": "lesson-01-1.wav",
+      "caption_sha256": "134480f19ff0e1fdeebf8d2d30d73673f525f04bb843e3b06d6ad86f40adf841",
+      "duration_seconds": 10.566
+    },
+    {
+      "file": "lesson-01-2.wav",
+      "caption_sha256": "e5644c0f82cf75353a56298539d18cb82e15e13e118a3df4687fc56e3f2200a8",
+      "duration_seconds": 13.897
+    },
+    {
+      "file": "lesson-02-0.wav",
+      "caption_sha256": "473d2f2bb2c490cc78dfb0b2a095ea3246eabbbb17af1a29b48ca4a5ae4f8994",
+      "duration_seconds": 13.0
+    },
+    {
+      "file": "lesson-02-1.wav",
+      "caption_sha256": "dfc5ba8a65b28bc6bf062ae6516742e55095086da570beda79294d205d2b50a8",
+      "duration_seconds": 12.562
+    },
+    {
+      "file": "lesson-02-2.wav",
+      "caption_sha256": "6be30f3036f4918474ed935cb59daf21cc79b015f667f236470ab3e88cd102d7",
+      "duration_seconds": 15.052
+    },
+    {
+      "file": "lesson-03-0.wav",
+      "caption_sha256": "0f1837d74a1a988c7040e9c63eb75664b075394a3c225d537d1eca35841afb6d",
+      "duration_seconds": 13.416
+    },
+    {
+      "file": "lesson-03-1.wav",
+      "caption_sha256": "b985148e55c927185bcfeddbc396d1d8063cddc9a101220ec5e70ab7889dca91",
+      "duration_seconds": 11.773
+    },
+    {
+      "file": "lesson-03-2.wav",
+      "caption_sha256": "0eb26d3baf5f30d28ca83c7482d20e5fa1aecc99a4970ee341a243a0f011555e",
+      "duration_seconds": 14.174
+    },
+    {
+      "file": "lesson-04-0.wav",
+      "caption_sha256": "4ea8e88b1c57c67e1a803d1c4ad772c93538eb94af0142cbe4a719bba36eca00",
+      "duration_seconds": 11.224
+    },
+    {
+      "file": "lesson-04-1.wav",
+      "caption_sha256": "941143586537bfc7c5322c95ef31fa0f6b7beb3a323925c917b3c55bf84710f6",
+      "duration_seconds": 12.319
+    },
+    {
+      "file": "lesson-04-2.wav",
+      "caption_sha256": "eeb4a45d61e89cc7a7c473b84a22bde3e239e0f108864a1ec7df575b3f2fd1f4",
+      "duration_seconds": 13.437
+    },
+    {
+      "file": "lesson-05-0.wav",
+      "caption_sha256": "5f803fb3a4412c432e5f19bc1f7b724fa1366dd9a9f96df7bf680d5d8bf963b0",
+      "duration_seconds": 13.619
+    },
+    {
+      "file": "lesson-05-1.wav",
+      "caption_sha256": "cce6d4c270942ca416a8d3ca902f2baccae3a74e9acf7c3ba79110c27f8bff56",
+      "duration_seconds": 12.957
+    },
+    {
+      "file": "lesson-05-2.wav",
+      "caption_sha256": "fa2eb155e5179f073a8b39c0dc84e6092287bef1f31c1c0a369696586a100108",
+      "duration_seconds": 13.2
+    },
+    {
+      "file": "lesson-06-0.wav",
+      "caption_sha256": "e49c371e6a9fd696c03cbe4f6e5421b97c0da5dd3ca642e394fc4d29ca3f3ad6",
+      "duration_seconds": 13.033
+    },
+    {
+      "file": "lesson-06-1.wav",
+      "caption_sha256": "00e78eadaeb1479f425b7d1d5c6eec934bb5c38ec596bf94c419ba096351641c",
+      "duration_seconds": 13.174
+    },
+    {
+      "file": "lesson-06-2.wav",
+      "caption_sha256": "8558e116cbb188b6811960a0499572b54247c91b0a3078360d01a7264a5344dd",
+      "duration_seconds": 13.871
+    },
+    {
+      "file": "lesson-07-0.wav",
+      "caption_sha256": "44ddc593bce7018aa06fa33d6159d0be7b857520e93e9b6d4744be6fda548a51",
+      "duration_seconds": 13.712
+    },
+    {
+      "file": "lesson-07-1.wav",
+      "caption_sha256": "648f12e790a0df869fa80ffd3d759a3d66a80c3409fefa9225ca72e9111a2250",
+      "duration_seconds": 12.419
+    },
+    {
+      "file": "lesson-07-2.wav",
+      "caption_sha256": "fb24a767b66829fa37aa39a8d9340df5fc756b8c6c1b0403c355108965688d42",
+      "duration_seconds": 13.905
+    },
+    {
+      "file": "lesson-08-0.wav",
+      "caption_sha256": "d9813007c57e8a3402d2ac5dd873661e116b8c9fd337b0e02ea580035ea2160a",
+      "duration_seconds": 12.431
+    },
+    {
+      "file": "lesson-08-1.wav",
+      "caption_sha256": "4cbf624045d6e3adc5944feaaafa102fa79dc2f278742bc560ed483e38f8dda7",
+      "duration_seconds": 13.733
+    },
+    {
+      "file": "lesson-08-2.wav",
+      "caption_sha256": "5d73adc72da90815dfe5bc499489fa18228c8f70267b9e0d7ffe66c634c78525",
+      "duration_seconds": 14.432
+    },
+    {
+      "file": "lesson-09-0.wav",
+      "caption_sha256": "e4719dfa02d046cb0cd024bde1f71d3cf81b40a59ef2cb5001c84f0e6eeca1d4",
+      "duration_seconds": 13.063
+    },
+    {
+      "file": "lesson-09-1.wav",
+      "caption_sha256": "2d5730658e1d6ba5815204b37cecce212b15d9703f7ffff1e537be9460311981",
+      "duration_seconds": 12.466
+    },
+    {
+      "file": "lesson-09-2.wav",
+      "caption_sha256": "7344d0a5bd3878d50bdbb47bd73e8d1872181a9050a15ffa6f106f526f52c76a",
+      "duration_seconds": 15.006
+    },
+    {
+      "file": "lesson-10-0.wav",
+      "caption_sha256": "6a401b7906dd5c4fb4ad871466cce7567ae4bf3376f57d0743e5ba5a8da4ff0f",
+      "duration_seconds": 16.195
+    },
+    {
+      "file": "lesson-10-1.wav",
+      "caption_sha256": "fd61c52b33fdfd561a50c0e89709f00715fb0325b12766887e0af6de0a3848ca",
+      "duration_seconds": 14.544
+    },
+    {
+      "file": "lesson-10-2.wav",
+      "caption_sha256": "431e6cb59bc08758d07a2787647b482406578705210fc951ef452feeed880f84",
+      "duration_seconds": 13.615
+    }
+  ]
+}
