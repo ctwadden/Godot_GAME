@@ -10,3 +10,7 @@
 - Scope limits: school Chromebook/network, Safari, mobile touch interactions, screen-reader user testing and classroom comprehension/pacing are NOT_TESTED. CSS supplies narrow layouts and visible keyboard focus; that is not a claim of complete accessibility validation.
 
 The public Pages deployment is verified separately against the published commit before a live student link is handed off. This document records the local checks above; it does not assert universal effectiveness.
+
+## Demand visibility repair — 27 October 2026
+
+Demand presets moved above the comparison. Daily sales, common-scale capacity bars, unused capacity, unfilled orders and full-horizon profit now update at time zero. The timeline profit remains separately labelled. Keyboard Enter activated Low demand; both sold20/day, with28 versus76 unused capacity and30-day profits$7,440 versus−$7,440. High demand immediately showed48 versus96/day,152 versus104 unfilled orders and$25,920 versus$42,720 profit. Seeking to0.5 day advanced both decoded videos to1.616666 seconds under high demand. Under low demand both batches had completed by0.5 day and displayed waiting feedback while scheduled costs continued. Reset returned time and current totals to zero/upfront purchase while preserving the horizon forecast. All14 existing model tests and JavaScript syntax checks passed. Desktop screenshot inspected; mobile and screen-reader user tests remain unperformed.
